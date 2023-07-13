@@ -1,0 +1,38 @@
+alg:
+  exclude_loi: true
+  num_iter: 10
+
+shape: # Shape feature and Anisotropic search region
+    shape_feature_type: 1
+    shape_metric_type: "cosine"
+    to_normalized: true
+    shape_score_type: "gaussian" # "gaussian" or "feature" for rescaling
+    std_factor_shape: 1. # Larger value => smaller anisotropic searching region # 0.5
+    radius_geodesic_max : 50. # Larger value => larger geodesic circle, last iter
+    radius_geodesic_min : 20. # Larger value => larger geodesic circle, first iter
+
+texture: # Texture feature and Local Texture Patch
+    threshold_texture_signal : 100 # Larger value => more LOIs to be excluded, value is empiracally determined
+    texture_metric_type : "cosine" 
+    echo_taus : [0.01212, 0.02424, 0.04848] # NOTE: 0.00606 => support radius ~5 mm
+    echo_support_radii : [10, 20, 40] # support radius in mm, corresponding to taus, multi-FOV
+    echo_fov_weights : [0.4, 0.3, 0.3]
+    echo_distance_type : 0 # geodesic
+
+anchor: # Anchor
+    std_factor_within_lois_texture : 1. # Larger value => less LOIs to be anchored
+    threshold_texture_score : 0.975 # Larger value => less LOIs to be anchored # 0.95
+    threshold_texture_multiplier : 0.995 # Larger value => less LOIs to be anchored
+    std_factor_unambiguous_texture : 1.5 # 1 # Larger value => less LOIs to be anchored (more vertices to be considered, possibly more clusters)
+    factor_dist_unambiguous_texture : 1.5 # 2 # Larger value => more LOI to be anchored (tolerance for deviation among clusters)
+    threshold_unambiguous_texture : 0.9 # Larger value => less LOIs to be anchored, same effect as "threshold_texture_score"
+    threshold_shape_texture_consensus : 1. # in mm, larger value => more LOI to be anchored
+    threshold_consensus_multiplier : 1.2 # Larger value => more LOIs to be anchored
+
+combined_score: # Score weights for combined score
+    combined_method : "add"
+    score_weights : [0.5, 0.5] # (shape, texture)
+
+echo:
+    bin: "/home/weilunhuang/misha/ECHODescriptors/Bin/Linux/GetDescriptor" # absolute path to the GetDescriptor 
+    multi_vert_num: 2000
