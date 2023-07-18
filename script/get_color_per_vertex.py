@@ -1,13 +1,25 @@
 import os
 import numpy as np
 import pymeshlab
+import argparse
 
 # Script to get the texture signal as scalar per vertex by:
 # 1. Load the mesh
 # 2. Turn the mesh in grayscale
 # 3. Get the scalar per vertex signal of texture
 
-base_dir = "../data/3dbodytex_long_data"
+# argument set-up
+parser = argparse.ArgumentParser(description="Get the texture signal as scalar per vertex")
+parser.add_argument("-i", "--input", type=str, help="Input directory of the pre-processed 3dbodytex data")
+
+# Parse the command line arguments to an object
+args = parser.parse_args()
+if not args.input:
+    print("No input folder is provided.")
+    print("For help type --help")
+    exit()
+
+base_dir = args.input 
 root_dirs = os.listdir(base_dir)
 root_dirs.sort()
 

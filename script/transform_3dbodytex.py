@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import trimesh
 import pymeshlab
+import argparse
 
 import sys
 sys.path.append("../")
@@ -10,16 +11,29 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.getcwd(), '../skin3d')))
 from skin3d.bodytex import BodyTexDataset
 
 # Script to transform the 3dbodytex data by: (for convenience since the parameters used in this work is in mm) 
+# NOTE: The script also transform the data to align with the convention used in [3D-CODED](https://github.com/ThibaultGROUEIX/3D-CODED).
+
+# argument set-up
+parser = argparse.ArgumentParser(description="Transform 3dbodytex data (highres)")
+parser.add_argument("-i", "--input", type=str, help="Input directory of the 3dbodytex data")
+parser.add_argument("-o", "--output", type=str, default="../data/3dbodytex_long_data", help="Output folder of the 3dbodytex data")
+
+# Parse the command line arguments to an object
+args = parser.parse_args()
+if not args.input:
+    print("No input folder is provided.")
+    print("For help type --help")
+    exit()
 
 ### Longitudinal annotation from Skin3D
 bodytex_csv = '../skin3d/data/3dbodytex-1.1-highres/bodytex.csv'
 bodytex_df = pd.read_csv(bodytex_csv, converters={'scan_id': lambda x: str(x)})
-data_dir = "/home/weilunhuang/data/3dbodytex-1.1-highres" # path to the folder of 3dbodytex
+data_dir = args.input # path to the folder of 3dbodytex
 bodytex = BodyTexDataset(df=bodytex_df, dir_textures=data_dir)
 long_df = bodytex.annotated_samples_in_partition('long')
 long_ids = [long_id.split('-') for long_id in long_df.subject_id.values] # get pairs of corresponding id
 
-output_dir = "../data/3dbodytex_long_data" # path to output folder
+output_dir = args.output # path to output folder
 if not os.path.exists(output_dir):
     os.makedirs(output_dir)
 

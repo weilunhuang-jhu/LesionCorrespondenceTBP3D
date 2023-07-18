@@ -227,7 +227,6 @@ def main():
     import argparse
     # argument set-up
     parser = argparse.ArgumentParser(description="Find lesion correspodnence of from source to the target")
-    # Add argument which takes path to a bag file as an input
     parser.add_argument("-s", "--source", type=str, help="Path to the source patient folder")
     parser.add_argument("-t", "--target", type=str, help="Path to the target patient folder")
     parser.add_argument("-p", "--params", type=str, default="params.yml", help="Path to the parameter file")
@@ -253,7 +252,7 @@ def main():
     # uniformed naming
     mesh_name ="real_scale_in_mm.ply"
     texture_name = "model_highres_0_normalized.png"
-    landmark_name = "landmarks_refined_25.txt"
+    landmark_name = "landmarks.txt"
     loi_name = "lesion_of_interest.txt" 
 
     # load data

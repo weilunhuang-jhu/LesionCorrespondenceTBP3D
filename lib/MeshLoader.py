@@ -1,3 +1,4 @@
+from packaging.version import parse as parse_version
 import os
 import pyvista as pv
 import numpy as np
@@ -65,7 +66,10 @@ class MeshData3DBodyTexTransformed(object):
         if use_pvmesh:
             self.mesh_pv_processed = pv.read(ply_filename)
             self.texture_pv = pv.read_texture(texture_filename)
-            assert self.mesh_pv_processed.is_all_triangles() # check if all triangles
+            if parse_version(pv.__version__) > parse_version("0.38"):
+                assert self.mesh_pv_processed.is_all_triangles
+            else:
+                assert self.mesh_pv_processed.is_all_triangles()
       
         # landmarks and LOI
         self.landmarks_vertex_id_list = []
@@ -108,12 +112,7 @@ class MeshData3DBodyTexTransformed(object):
         landmarks_coords = [] # coordinate of lanmark
         with open(filename, "r") as landmark_file:
             for landmark_info in landmark_file.readlines():
-                if "refined" in filename:
-                    x, y, z = landmark_info.split(" ")
-                else:
-                    landmark_name, x, y, z = landmark_info.split(",")
-                    if "finger" in landmark_name or "hand" in landmark_name: # neglect landmarks on fingers and hands
-                        continue
+                x, y, z = landmark_info.split(" ")
                 landmark = [float(ele) for ele in [x,y,z]]
                 landmarks_coords.append(landmark)
                 closest_vertex_id = find_closest_vertex(landmark, self.V)
