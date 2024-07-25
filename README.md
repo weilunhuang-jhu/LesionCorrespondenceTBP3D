@@ -1,7 +1,7 @@
 # Lesion Correspondence TBP 3D 
 
 This code-base implements the method presented in the paper [Skin Lesion Correspondence Localization in
-Total Body Photography]().
+Total Body Photography](https://arxiv.org/abs/2307.09642) published in [MICCAI 2023](https://link.springer.com/chapter/10.1007/978-3-031-43990-2_25).
 Given a set of lesions of interest in a soruce textured 3D mesh, we would like to localize lesion correspondence in a target textured 3D mesh.
 
 ![Proposed Method](https://i.imgur.com/M7NaLER.png)
@@ -19,7 +19,7 @@ conda activate tbp_lesion_corr
 pip install potpourri3d pymeshlab pandas yaml
 ```
 
-Please compile [ECHODescriptors](https://github.com/weilunhuang-jhu/ECHODescriptors.git) and modify the path under <b>echo/bin</b> in [params.yml](https://github.com/weilunhuang-jhu/LesionCorrepsondenceTBP3D/blob/main/params.yml) to the path of the <b>GetDescriptor</b> exe/bin file.
+Please compile [ECHODescriptors](https://github.com/weilunhuang-jhu/ECHODescriptors.git) and modify the path under <b>echo/bin</b> in [params.yml](https://github.com/weilunhuang-jhu/LesionCorrepsondenceTBP3D/tree/main/params.yml) to the path of the <b>GetDescriptor</b> exe/bin file.
 
 ## Data
 
@@ -50,7 +50,7 @@ ${Subject}
 
 ## Preprocess data
 
-In [script/](https://github.com/weilunhuang-jhu/LesionCorrepsondenceTBP3D/blob/main/script)
+In [script/](https://github.com/weilunhuang-jhu/LesionCorrepsondenceTBP3D/tree/main/script)
 
 - Transform data: (convert to mm scale)
 ```
@@ -75,7 +75,7 @@ The localized lesion correspondence in each iteration is saved in the <b>pkl</b>
 
 ### Visualization
 
-In [script/](https://github.com/weilunhuang-jhu/LesionCorrepsondenceTBP3D/blob/main/script)
+In [script/](https://github.com/weilunhuang-jhu/LesionCorrepsondenceTBP3D/tree/main/script)
 
 - Visualize landmarks and LOIs:
 
